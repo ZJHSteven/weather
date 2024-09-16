@@ -1,7 +1,7 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { getPluginId } from "../util/getPluginId";
 
-const TEST_EFFECT = "smoke";
+const TEST_EFFECT = "snow";
 
 export function createEffectsMenu() {
   OBR.contextMenu.create({
