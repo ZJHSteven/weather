@@ -12,10 +12,11 @@ async function waitUntilOBRReady() {
   });
 }
 
+let reconciler: Reconciler | null = null;
 async function init() {
   await waitUntilOBRReady();
   createEffectsMenu();
-  const reconciler = new Reconciler();
+  reconciler = new Reconciler();
   reconciler.register(
     new SmokeReactor(reconciler),
     new SnowReactor(reconciler)
@@ -23,3 +24,11 @@ async function init() {
 }
 
 init();
+
+// Clean up on HMR refresh
+if (import.meta.hot) {
+  import.meta.hot.accept();
+  import.meta.hot.dispose(() => {
+    reconciler?.delete();
+  });
+}
