@@ -61,8 +61,9 @@ export class SmokeActor extends Actor {
 
   private applySmokeConfig(effect: Effect, config: SmokeConfig) {
     effect.uniforms = [
-      { name: "tiling", value: config.tiling ?? 3 },
-      { name: "speed", value: config.speed ?? 0.5 },
+      { name: "tiling", value: config.tiling ?? 5 },
+      { name: "speed", value: config.speed ?? 0.1 },
+      { name: "direction", value: config.direction ?? { x: 1, y: 1 } },
     ];
     return effect;
   }
