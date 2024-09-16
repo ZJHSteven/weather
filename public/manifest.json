@@ -1,0 +1,10 @@
+{
+  "name": "Effects",
+  "version": "1.0.0",
+  "manifest_version": 1,
+  "author": "Owlbear Rodeo",
+  "homepage_url": "https://extensions.owlbear.rodeo/effects",
+  "icon": "/logo.png",
+  "description": "Add effects like smoke, rain and snow to your maps",
+  "background_url": "/background.html"
+}
