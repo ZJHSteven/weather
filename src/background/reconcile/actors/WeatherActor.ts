@@ -1,13 +1,13 @@
 import { buildEffect, Effect, isEffect, Item } from "@owlbear-rodeo/sdk";
 import { Actor } from "../Actor";
 import { Reconciler } from "../Reconciler";
-import { SnowConfig } from "../../../types/SnowConfig";
+import { WeatherConfig } from "../../../types/WeatherConfig";
 import { getMetadata } from "../../../util/getMetadata";
 import { getPluginId } from "../../../util/getPluginId";
 
-import sksl from "../../shaders/snow.frag";
+import snow from "../../shaders/snow.frag";
 
-export class SnowActor extends Actor {
+export class WeatherActor extends Actor {
   // ID of the current effect item
   private effect: string;
   constructor(reconciler: Reconciler, parent: Item) {
@@ -22,49 +22,59 @@ export class SnowActor extends Actor {
   }
 
   update(parent: Item) {
-    const config = getMetadata<SnowConfig>(
+    const config = getMetadata<WeatherConfig>(
       parent.metadata,
-      getPluginId("snow"),
-      {}
+      getPluginId("weather"),
+      { type: "SNOW" }
     );
     this.reconciler.patcher.updateItems([
       this.effect,
       (item) => {
         if (isEffect(item)) {
-          this.applySmokeConfig(item, config);
+          this.applyWeatherConfig(item, config);
         }
       },
     ]);
   }
 
   private parentToEffect(parent: Item) {
-    const config = getMetadata<SnowConfig>(
+    const config = getMetadata<WeatherConfig>(
       parent.metadata,
-      getPluginId("snow"),
-      {}
+      getPluginId("weather"),
+      { type: "SNOW" }
     );
     const effect = buildEffect()
       .attachedTo(parent.id)
       .position(parent.position)
       .rotation(parent.rotation)
-      .sksl(sksl)
       .effectType("ATTACHMENT")
       .locked(true)
       .disableHit(true)
       .layer("MAP")
       .build();
 
-    this.applySmokeConfig(effect, config);
+    this.applyWeatherConfig(effect, config);
 
     return effect;
   }
 
-  private applySmokeConfig(effect: Effect, config: SnowConfig) {
+  private getSkslFromConfig(_: WeatherConfig) {
+    return snow;
+  }
+
+  private applyWeatherConfig(effect: Effect, config: WeatherConfig) {
     effect.uniforms = [
-      { name: "tiling", value: config.tiling ?? 3 },
-      { name: "direction", value: config.direction ?? { x: 1, y: -1 } },
-      { name: "speed", value: config.speed ?? 0.5 },
+      { name: "tiling", value: config.tiling ?? 1 },
+      { name: "direction", value: config.direction ?? { x: 1, y: 1 } },
+      { name: "speed", value: config.speed ?? 1 },
+      { name: "density", value: config.density ?? 1 },
     ];
+
+    const sksl = this.getSkslFromConfig(config);
+    if (effect.sksl !== sksl) {
+      effect.sksl = sksl;
+    }
+
     return effect;
   }
 }

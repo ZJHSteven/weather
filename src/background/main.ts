@@ -1,8 +1,7 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { Reconciler } from "./reconcile/Reconciler";
 import { createEffectsMenu } from "./createEffectsMenu";
-import { SmokeReactor } from "./reconcile/reactors/SmokeReactor";
-import { SnowReactor } from "./reconcile/reactors/SnowReactor";
+import { WeatherReactor } from "./reconcile/reactors/WeatherReactor";
 
 async function waitUntilOBRReady() {
   return new Promise<void>((resolve) => {
@@ -17,10 +16,7 @@ async function init() {
   await waitUntilOBRReady();
   createEffectsMenu();
   reconciler = new Reconciler();
-  reconciler.register(
-    new SmokeReactor(reconciler),
-    new SnowReactor(reconciler)
-  );
+  reconciler.register(new WeatherReactor(reconciler));
 }
 
 init();

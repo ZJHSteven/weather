@@ -7,7 +7,7 @@ vec2 hash(vec2 p) {
 
 // Based off of https://thebookofshaders.com/12/
 // A simple voronoi based cellular animation that jitters back and forth
-void cellAnimation(vec2 p, float jitter, inout float minDist, inout vec2 minPoint) {
+void cellAnimation(vec2 p, float jitter, float speed, inout float minDist, inout vec2 minPoint) {
   // Split the space into tiles
   vec2 tileInt = floor(p);
   vec2 tileFrac = fract(p);
@@ -17,7 +17,7 @@ void cellAnimation(vec2 p, float jitter, inout float minDist, inout vec2 minPoin
       vec2 neighbor = vec2(float(i), float(j));
       vec2 point = hash(tileInt + neighbor);
       // Animate the point
-      point = 0.5 + 0.5 * sin(time + jitter * point);
+      point = 0.5 + 0.5 * sin(time * speed + jitter * point);
       vec2 diff = neighbor + point - tileFrac;
       float dist = length(diff);
       if(dist < minDist) {

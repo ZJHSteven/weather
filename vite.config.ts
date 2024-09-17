@@ -7,6 +7,7 @@ import glsl from "vite-plugin-glsl";
 export default defineConfig({
   plugins: [react(), glsl()],
   build: {
+    assetsInlineLimit: 0,
     rollupOptions: {
       input: {
         menu: resolve(__dirname, "menu.html"),

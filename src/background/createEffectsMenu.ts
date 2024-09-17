@@ -1,21 +1,21 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { getPluginId } from "../util/getPluginId";
 
-const TEST_EFFECT = "smoke";
+import weatherIcon from "../assets/weather.svg";
 
 export function createEffectsMenu() {
   OBR.contextMenu.create({
-    id: getPluginId("effects-menu/add"),
+    id: getPluginId("weather-menu/add"),
     icons: [
       {
-        icon: "/icon.svg",
-        label: "Add Effect",
+        icon: weatherIcon,
+        label: "Add Weather",
         filter: {
           every: [
             { key: "type", value: "IMAGE" },
             { key: "layer", value: "MAP" },
             {
-              key: ["metadata", getPluginId(TEST_EFFECT)],
+              key: ["metadata", getPluginId("weather")],
               value: undefined,
             },
           ],
@@ -25,22 +25,26 @@ export function createEffectsMenu() {
     async onClick(context) {
       await OBR.scene.items.updateItems(context.items, (items) => {
         for (const item of items) {
-          item.metadata[getPluginId(TEST_EFFECT)] = {};
+          item.metadata[getPluginId("weather")] = {
+            type: "SNOW",
+          };
         }
       });
     },
   });
 
   OBR.contextMenu.create({
-    id: getPluginId("effects-menu/remove"),
+    id: getPluginId("weather-menu/settings"),
     icons: [
       {
-        icon: "/icon.svg",
-        label: "Remove Effect",
+        icon: weatherIcon,
+        label: "Weather Settings",
         filter: {
           every: [
+            { key: "type", value: "IMAGE" },
+            { key: "layer", value: "MAP" },
             {
-              key: ["metadata", getPluginId(TEST_EFFECT)],
+              key: ["metadata", getPluginId("weather")],
               value: undefined,
               operator: "!=",
             },
@@ -48,12 +52,9 @@ export function createEffectsMenu() {
         },
       },
     ],
-    async onClick(context) {
-      await OBR.scene.items.updateItems(context.items, (items) => {
-        for (const item of items) {
-          delete item.metadata[getPluginId(TEST_EFFECT)];
-        }
-      });
+    embed: {
+      url: "/menu.html",
+      height: 263,
     },
   });
 }
