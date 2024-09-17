@@ -222,7 +222,6 @@ function MenuControls({ items }: { items: Item[] }) {
     density: config.density ?? 1,
     direction: config.direction ?? { x: 1, y: 1 },
     speed: config.speed ?? 1,
-    tiling: config.tiling ?? 1,
     type: config.type,
   };
 

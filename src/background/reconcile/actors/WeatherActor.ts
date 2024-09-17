@@ -6,6 +6,7 @@ import { getMetadata } from "../../../util/getMetadata";
 import { getPluginId } from "../../../util/getPluginId";
 
 import snow from "../../shaders/snow.frag";
+import rain from "../../shaders/rain.frag";
 
 export class WeatherActor extends Actor {
   // ID of the current effect item
@@ -50,7 +51,7 @@ export class WeatherActor extends Actor {
       .effectType("ATTACHMENT")
       .locked(true)
       .disableHit(true)
-      .layer("MAP")
+      .layer("RULER")
       .build();
 
     this.applyWeatherConfig(effect, config);
@@ -58,13 +59,15 @@ export class WeatherActor extends Actor {
     return effect;
   }
 
-  private getSkslFromConfig(_: WeatherConfig) {
+  private getSkslFromConfig(config: WeatherConfig) {
+    if (config.type === "RAIN") {
+      return rain;
+    }
     return snow;
   }
 
   private applyWeatherConfig(effect: Effect, config: WeatherConfig) {
     effect.uniforms = [
-      { name: "tiling", value: config.tiling ?? 1 },
       { name: "direction", value: config.direction ?? { x: 1, y: 1 } },
       { name: "speed", value: config.speed ?? 1 },
       { name: "density", value: config.density ?? 1 },
