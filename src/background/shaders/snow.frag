@@ -4,7 +4,7 @@ uniform vec2 direction;
 uniform float speed;
 uniform float density;
 
-#include util/cell.frag
+#include util/circle.frag
 #include util/fbm.frag;
 
 float snow(vec2 p, float jitter, vec2 direction, float speed, float size) {
@@ -13,7 +13,7 @@ float snow(vec2 p, float jitter, vec2 direction, float speed, float size) {
   // Animate the swaying of the snow
   float minDist = 10.;
   vec2 minPoint;
-  cellAnimation(p, jitter, speed, minDist, minPoint);
+  animatedCircle(p, jitter, speed, minDist, minPoint);
   // Scale the circle by the progress of the animation
   float scale = dot(minPoint, vec2(0.4, 0.4)) - 0.2 - size;
   // Convert the distance to a circle
@@ -43,7 +43,7 @@ half4 main(float2 coord) {
   // Exponential speed from the input
   float baseSpeed = pow(speed - 0.5, 1.5);
     // Tile per 20 grid cells
-  float tiling = size.x / 150.0 / 20.0;
+  float tiling = max(size.x, size.y) / 150.0 / 20.0;
 
   // Overlap snow falls of different sizes and speeds
   alpha += snow(p * 3.0 * tiling, 14.227, direction, 0.252 * baseSpeed, 0.04);

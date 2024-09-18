@@ -1,0 +1,74 @@
+uniform float time;
+uniform vec2 size;
+uniform vec2 direction;
+uniform float speed;
+uniform float density;
+
+#include util/fbm.frag;
+#include util/line.frag;
+
+// from https://www.shadertoy.com/view/ldBGW1
+vec3 fireColor(float x, float k) {
+  float y = clamp(1.0 - x, 0.0, 1.0);
+  y *= k;
+  return vec3(exp(-y * 0.1) + 0.2, exp(-y * 0.3), exp(-y * 0.7)) * (1.0 - exp(-x * k));
+}
+
+vec4 ember(vec2 p, float jitter, vec2 direction, float speed, float size, float lineLength) {
+  // Move the input space in the given direction
+  p += time * direction * speed * vec2(-1, 1);
+  // Animate the rise of the ember
+  float minDist = 10.;
+  vec2 minPoint;
+  animatedLine(p, jitter, lineLength + (speed * 0.1), speed, direction * vec2(-1, 1), minDist, minPoint);
+  float scale = dot(minPoint, vec2(0.8, 0.8));
+  float blur = size * 1.5;
+  float line = 1.0 - smoothstep(size * scale - blur, size * scale + blur, minDist);
+  return vec4(line * fireColor(clamp(1.0 - minDist * 2.5, 0.0, 1.0), 100.0), line);
+}
+
+vec4 flame(vec2 p, float speed) {
+  // Animate the space in the given direction
+  vec2 anim = direction * time * speed * vec2(-1, 1) * 2;
+
+  // Calculate the inner deformation with a slower animation
+  vec2 innerP = p + anim * 0.1;
+  vec2 q = vec2(fbm4(innerP), fbm4(innerP + vec2(0.452)));
+
+  // Feed the inner fBM into another fBM like https://iquilezles.org/articles/warp/
+  float fbm = fbm6(p + anim + q * 6.3);
+  float alpha = clamp(pow(fbm * 0.5, 2.05), 0.0, 1.0);
+
+  return vec4(fireColor(alpha, 5.0), alpha);
+}
+
+half4 main(float2 coord) {
+  vec2 p = coord / size;
+  // Remove aspect ratio
+  p.x *= size.x / size.y;
+
+  // Exponential speed from the input
+  float baseSpeed = pow(speed - 0.5, 2.0);
+  // Tile per 20 grid cells
+  float tiling = max(size.x, size.y) / 150.0 / 20.0;
+
+  vec4 color = vec4(0.0);
+
+  // Overlap rain with decreasing size and increasing jitter
+  color += ember(p * 5.0 * tiling, 0.8, direction, baseSpeed * 0.25 + 0.25, 0.014, 0.25);
+  color += ember(p * 10.0 * tiling, 1.2, direction, baseSpeed * 0.25 + 0.5, 0.01, 0.25);
+  if(density > 1) {
+    color += ember(p * 20.0 * tiling, 0.8, direction, baseSpeed * 0.25 + 1.0, 0.014, 0.5);
+  }
+  if(density > 1) {
+    color += ember(p * 30.0 * tiling, 1.5, direction, baseSpeed * 0.25 + 1.5, 0.014, 0.5);
+  }
+  if(density > 2) {
+    float intensity = density > 3 ? 0.8 : 0.4;
+    color += flame(p * 5.0 * tiling, baseSpeed * 0.1 + 0.5) * intensity;
+  }
+
+  // color += ember(p * 20.0 * tiling, 1.2, direction, baseSpeed * 0.5 + 2, 0.014, 1.0);
+
+  return color;
+}

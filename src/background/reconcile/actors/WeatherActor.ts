@@ -7,6 +7,7 @@ import { getPluginId } from "../../../util/getPluginId";
 
 import snow from "../../shaders/snow.frag";
 import rain from "../../shaders/rain.frag";
+import fire from "../../shaders/fire.frag";
 
 export class WeatherActor extends Actor {
   // ID of the current effect item
@@ -62,6 +63,8 @@ export class WeatherActor extends Actor {
   private getSkslFromConfig(config: WeatherConfig) {
     if (config.type === "RAIN") {
       return rain;
+    } else if (config.type === "FIRE") {
+      return fire;
     }
     return snow;
   }
