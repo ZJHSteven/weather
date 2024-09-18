@@ -42,7 +42,7 @@ half4 main(float2 coord) {
 
   // Exponential speed from the input
   float baseSpeed = pow(speed - 0.5, 1.5);
-    // Tile per 20 grid cells
+  // Tile per 20 grid cells
   float tiling = max(size.x, size.y) / 150.0 / 20.0;
 
   // Overlap snow falls of different sizes and speeds
