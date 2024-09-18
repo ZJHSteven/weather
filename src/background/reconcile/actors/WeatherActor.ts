@@ -77,9 +77,9 @@ export class WeatherActor extends Actor {
 
   private applyWeatherConfig(effect: Effect, config: WeatherConfig) {
     effect.uniforms = [
-      { name: "direction", value: config.direction ?? { x: 1, y: 1 } },
+      { name: "direction", value: config.direction ?? { x: -1, y: -1 } },
       { name: "speed", value: config.speed ?? 1 },
-      { name: "density", value: config.density ?? 1 },
+      { name: "density", value: config.density ?? 3 },
     ];
 
     const sksl = this.getSkslFromConfig(config);

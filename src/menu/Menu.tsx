@@ -219,8 +219,8 @@ function MenuControls({ items }: { items: Item[] }) {
   }, [items]);
 
   const values: Required<WeatherConfig> = {
-    density: config.density ?? 1,
-    direction: config.direction ?? { x: 1, y: 1 },
+    density: config.density ?? 3,
+    direction: config.direction ?? { x: -1, y: -1 },
     speed: config.speed ?? 1,
     type: config.type,
   };
@@ -283,13 +283,12 @@ function MenuControls({ items }: { items: Item[] }) {
               handleConditionChange(e.target.value as WeatherConfig["type"])
             }
           >
-            <MenuItem value="RAIN">Rain</MenuItem>
             <MenuItem value="SNOW">Snow</MenuItem>
-            <MenuItem value="FIRE">Fire</MenuItem>
+            <MenuItem value="RAIN">Rain</MenuItem>
             <MenuItem value="SAND">Sand</MenuItem>
+            <MenuItem value="FIRE">Fire</MenuItem>
             <MenuItem value="CLOUD">Cloud</MenuItem>
-            <MenuItem value="BLOSSOM">Blossom</MenuItem>
-            <MenuItem value="FLOWER">Flower</MenuItem>
+            <MenuItem value="BLOOM">Bloom</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth>
