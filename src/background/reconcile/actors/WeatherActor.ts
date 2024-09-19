@@ -10,6 +10,7 @@ import rain from "../../shaders/rain.frag";
 import fire from "../../shaders/fire.frag";
 import sand from "../../shaders/sand.frag";
 import cloud from "../../shaders/cloud.frag";
+import bloom from "../../shaders/bloom.frag";
 
 export class WeatherActor extends Actor {
   // ID of the current effect item
@@ -71,8 +72,11 @@ export class WeatherActor extends Actor {
       return sand;
     } else if (config.type === "CLOUD") {
       return cloud;
+    } else if (config.type === "BLOOM") {
+      return bloom;
+    } else {
+      return snow;
     }
-    return snow;
   }
 
   private applyWeatherConfig(effect: Effect, config: WeatherConfig) {
