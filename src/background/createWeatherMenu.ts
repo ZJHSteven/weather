@@ -3,7 +3,7 @@ import { getPluginId } from "../util/getPluginId";
 
 import weatherIcon from "../assets/weather.svg";
 
-export function createEffectsMenu() {
+export function createWeatherMenu() {
   OBR.contextMenu.create({
     id: getPluginId("weather-menu/add"),
     icons: [
