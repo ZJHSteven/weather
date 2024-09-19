@@ -50,6 +50,7 @@ export class WeatherActor extends Actor {
     );
     const effect = buildEffect()
       .attachedTo(parent.id)
+      .visible(parent.visible)
       .position(parent.position)
       .rotation(parent.rotation)
       .effectType("ATTACHMENT")
