@@ -41,20 +41,23 @@ half4 main(float2 coord) {
   // Tile per 20 grid cells
   float tiling = max(size.x, size.y) / 150.0 / 20.0;
 
-  // Overlap rain with decreasing size and increasing jitter
-  alpha += rain(p * 10.0 * tiling, 0.1, direction, baseSpeed + 1, 0.0044, 0.4);
-  alpha += rain(p * 20.0 * tiling, 0.15, direction, baseSpeed + 3, 0.008, 0.4);
-  if(density > 1) {
-    alpha += rain(p * 30.0 * tiling, 0.2, direction, baseSpeed + 5, 0.014, 0.4);
-  }
-  if(density > 2) {
-    alpha += rain(p * 50.0 * tiling, 0.4, direction, baseSpeed + 10, 0.008, 0.8);
-  }
+  // Overlap rain with based on density
   if(density > 3) {
-    alpha += rain(p * 80.0 * tiling, 0.8, direction, baseSpeed + 12, 0.008, 1.6);
+    alpha += rain(p * 40.0 * tiling, 0.2, direction, baseSpeed + 10, 0.014, 0.6);
+    alpha += rain(p * 70.0 * tiling, 0.2, direction, baseSpeed + 15, 0.03, 1.6);
+  } else if(density > 2) {
+    alpha += rain(p * 30.0 * tiling, 0.2, direction, baseSpeed + 5, 0.014, 0.6);
+    alpha += rain(p * 50.0 * tiling, 0.4, direction, baseSpeed + 10, 0.02, 0.8);
+  } else if(density > 1) {
+    alpha += rain(p * 20.0 * tiling, 0.2, direction, baseSpeed + 5, 0.014, 0.6);
+    alpha += rain(p * 30.0 * tiling, 0.2, direction, baseSpeed + 5, 0.014, 0.6);
+  } else {
+    alpha += rain(p * 12.0 * tiling, 0.1, direction, baseSpeed + 2, 0.0044, 0.4);
+    alpha += rain(p * 20.0 * tiling, 0.15, direction, baseSpeed + 3, 0.008, 0.4);
   }
+
   if(density > 2) {
-    float intensity = density > 3 ? 1.0 : 0.5;
+    float intensity = density > 3 ? 1.0 : 0.8;
     alpha += mist(p * 5.0 * tiling, baseSpeed + 5) * intensity;
   }
 

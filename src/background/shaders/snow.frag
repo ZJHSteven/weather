@@ -46,12 +46,17 @@ half4 main(float2 coord) {
   float tiling = max(size.x, size.y) / 150.0 / 20.0;
 
   // Overlap snow falls of different sizes and speeds
-  alpha += snow(p * 3.0 * tiling, 14.227, direction, 0.252 * baseSpeed, 0.04);
-  alpha += snow(p * 5.0 * tiling, 11.683, direction, 0.524 * baseSpeed, 0.04);
-  alpha += snow(p * 8.0 * tiling, 8.363, direction, 0.884 * baseSpeed, 0.04);
-  if(density > 1) {
-    alpha += snow(p * 12.0 * tiling, 5.227, direction, 0.643 * baseSpeed, 0.1);
+  alpha += snow(p * 8.0 * tiling, 8.363, direction, 0.884 * baseSpeed, 0.08);
+  if(density > 3) {
+    alpha += snow(p * 35.0 * tiling, 11.683, direction, 1.24 * baseSpeed, 0.25);
+  } else if(density > 2) {
+    alpha += snow(p * 30.0 * tiling, 11.683, direction, 0.824 * baseSpeed, 0.25);
+  } else if(density > 1) {
+    alpha += snow(p * 15.0 * tiling, 11.683, direction, 0.824 * baseSpeed, 0.1);
+  } else {
+    alpha += snow(p * 5.0 * tiling, 11.683, direction, 0.524 * baseSpeed, 0.04);
   }
+
   if(density > 2) {
     float intensity = density > 3 ? 1.25 : 0.5;
     alpha += mist(p * 5.0 * tiling, baseSpeed) * intensity;

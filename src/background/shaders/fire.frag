@@ -54,21 +54,22 @@ half4 main(float2 coord) {
 
   vec4 color = vec4(0.0);
 
-  // Overlap rain with decreasing size and increasing jitter
-  color += ember(p * 5.0 * tiling, 0.8, direction, baseSpeed * 0.25 + 0.25, 0.014, 0.25);
-  color += ember(p * 10.0 * tiling, 1.2, direction, baseSpeed * 0.25 + 0.5, 0.01, 0.25);
-  if(density > 1) {
-    color += ember(p * 20.0 * tiling, 0.8, direction, baseSpeed * 0.25 + 1.0, 0.014, 0.5);
+  // Overlap embers based on density
+  color += ember(p * 5.0 * tiling, 0.8, direction, baseSpeed * 0.2 + 0.2, 0.014, 0.25);
+  if(density > 3) {
+    color += ember(p * 40.0 * tiling, 0.8, direction, baseSpeed * 0.25 + 2.5, 0.05, 1.0);
+  } else if(density > 2) {
+    color += ember(p * 30.0 * tiling, 1.2, direction, baseSpeed * 0.25 + 1.5, 0.04, 0.75);
+  } else if(density > 1) {
+    color += ember(p * 20.0 * tiling, 1.2, direction, baseSpeed * 0.25 + 1.0, 0.03, 0.5);
+  } else {
+    color += ember(p * 10.0 * tiling, 1.2, direction, baseSpeed * 0.25 + 0.5, 0.01, 0.25);
   }
-  if(density > 1) {
-    color += ember(p * 30.0 * tiling, 1.5, direction, baseSpeed * 0.25 + 1.5, 0.014, 0.5);
-  }
+
   if(density > 2) {
     float intensity = density > 3 ? 0.8 : 0.4;
     color += flame(p * 5.0 * tiling, baseSpeed * 0.1 + 0.5) * intensity;
   }
-
-  // color += ember(p * 20.0 * tiling, 1.2, direction, baseSpeed * 0.5 + 2, 0.014, 1.0);
 
   return color;
 }
