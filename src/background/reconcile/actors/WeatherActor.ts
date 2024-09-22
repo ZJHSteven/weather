@@ -56,6 +56,7 @@ export class WeatherActor extends Actor {
       .effectType("ATTACHMENT")
       .locked(true)
       .disableHit(true)
+      .disableAttachmentBehavior(["COPY"])
       .layer("RULER")
       .build();
 
