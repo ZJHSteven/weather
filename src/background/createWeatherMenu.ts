@@ -12,7 +12,6 @@ export function createWeatherMenu() {
         label: "Add Weather",
         filter: {
           every: [
-            { key: "type", value: "IMAGE" },
             { key: "layer", value: "MAP" },
             {
               key: ["metadata", getPluginId("weather")],
@@ -42,7 +41,6 @@ export function createWeatherMenu() {
         label: "Weather Settings",
         filter: {
           every: [
-            { key: "type", value: "IMAGE" },
             { key: "layer", value: "MAP" },
             {
               key: ["metadata", getPluginId("weather")],
