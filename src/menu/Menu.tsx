@@ -1,5 +1,5 @@
 import OBR, { Item, Vector2 } from "@owlbear-rodeo/sdk";
-import { useEffect, useMemo, useState } from "react";
+import { forwardRef, useEffect, useMemo, useState } from "react";
 import { getMetadata } from "../util/getMetadata";
 import { WeatherConfig } from "../types/WeatherConfig";
 import { getPluginId } from "../util/getPluginId";
@@ -30,11 +30,47 @@ import SouthEast from "@mui/icons-material/SouthEastRounded";
 import SouthWest from "@mui/icons-material/SouthWestRounded";
 import NorthWest from "@mui/icons-material/NorthWestRounded";
 import Button from "@mui/material/Button";
+import Paper, { PaperProps } from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 
 const SmallLabel = styled(FormLabel)({
   fontSize: "0.75rem",
   marginBottom: 4,
 });
+
+const ScrollInsetPaper = forwardRef<HTMLDivElement, PaperProps>(
+  ({ children, ...rest }, ref) => {
+    return (
+      <Paper
+        sx={{
+          borderRadius: 1,
+          overflow: "hidden",
+          maxWidth: "calc(100% - 32px)",
+          maxHeight: "calc(100% - 96px)",
+          boxShadow: "var(--Paper-shadow)",
+          backgroundImage: "var(--Paper-overlay)",
+          position: "absolute",
+          display: "flex",
+          py: 1,
+        }}
+        {...rest}
+        ref={ref}
+      >
+        <Box
+          sx={{
+            overflowY: "auto",
+            overflowX: "hidden",
+            outline: 0,
+            WebkitOverflowScrolling: "touch",
+            width: "100%",
+          }}
+        >
+          {children}
+        </Box>
+      </Paper>
+    );
+  }
+);
 
 export function Menu() {
   const [selection, setSelection] = useState<string[] | null>(null);
@@ -282,6 +318,11 @@ function MenuControls({ items }: { items: Item[] }) {
             onChange={(e) =>
               handleConditionChange(e.target.value as WeatherConfig["type"])
             }
+            MenuProps={{
+              slots: {
+                paper: ScrollInsetPaper,
+              },
+            }}
           >
             <MenuItem value="SNOW">Snow</MenuItem>
             <MenuItem value="RAIN">Rain</MenuItem>
@@ -306,6 +347,11 @@ function MenuControls({ items }: { items: Item[] }) {
               },
               ".MuiSvgIcon-root": {
                 ml: 0.5,
+              },
+            }}
+            MenuProps={{
+              slots: {
+                paper: ScrollInsetPaper,
               },
             }}
           >
