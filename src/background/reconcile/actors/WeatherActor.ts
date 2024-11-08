@@ -37,6 +37,7 @@ export class WeatherActor extends Actor {
       (item) => {
         if (isEffect(item)) {
           this.applyWeatherConfig(item, config);
+          this.applyWeatherLayer(item, parent);
         }
       },
     ]);
@@ -57,10 +58,11 @@ export class WeatherActor extends Actor {
       .locked(true)
       .disableHit(true)
       .disableAttachmentBehavior(["COPY"])
-      .layer("RULER")
+      .disableAutoZIndex(true)
       .build();
 
     this.applyWeatherConfig(effect, config);
+    this.applyWeatherLayer(effect, parent);
 
     return effect;
   }
@@ -94,5 +96,19 @@ export class WeatherActor extends Actor {
     }
 
     return effect;
+  }
+
+  private applyWeatherLayer(effect: Effect, parent: Item) {
+    // If the parent is on the fog layer this effect should be put above it
+    // If it is on the map layer put the effect at the bottom of the ruler layer
+    const isFog = parent.layer === "FOG";
+    const layer = isFog ? "FOG" : "RULER";
+    const zIndex = isFog ? parent.zIndex + 1 : 0;
+    if (effect.layer !== layer) {
+      effect.layer = layer;
+    }
+    if (effect.zIndex !== zIndex) {
+      effect.zIndex = zIndex;
+    }
   }
 }
