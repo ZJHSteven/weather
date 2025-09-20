@@ -2,12 +2,12 @@ title: 天气
 description: 为地图添加雨雪等天气效果
 author: ZJHSteven
 image: https://raw.githubusercontent.com/ZJHSteven/weather/main/docs/header.jpg
-icon: https://weather.owlbear.rodeo/logo.png
+icon: https://weather-56j.pages.dev/logo.png
 tags:
   - built-by-owlbear
   - content-pack
-manifest: https://weather.owlbear.rodeo/manifest.json
-learn-more: https://extensions.owlbear.rodeo/weather
+manifest: https://bubbles-for-owlbear-rodeo.pages.dev/manifest.json
+learn-more: https://weather-56j.pages.dev/
 ---
 
 # 天气
