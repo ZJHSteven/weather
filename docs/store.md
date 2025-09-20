@@ -1,8 +1,7 @@
----
-title: Weather
-description: Add weather like rain and snow to your maps
-author: Owlbear Rodeo
-image: https://raw.githubusercontent.com/owlbear-rodeo/weather/main/docs/header.jpg
+title: 天气
+description: 为地图添加雨雪等天气效果
+author: ZJHSteven
+image: https://raw.githubusercontent.com/ZJHSteven/weather/main/docs/header.jpg
 icon: https://weather.owlbear.rodeo/logo.png
 tags:
   - built-by-owlbear
@@ -11,31 +10,34 @@ manifest: https://weather.owlbear.rodeo/manifest.json
 learn-more: https://extensions.owlbear.rodeo/weather
 ---
 
-# Weather
+# 天气
 
-Add weather like rain and snow to your maps
+> 本扩展基于 [Owlbear Rodeo/weather](https://github.com/owlbear-rodeo/weather) 制作，由 ZJHSteven 维护汉化。若需了解原始项目或反馈功能性问题，请访问上游仓库。
 
-## Add weather
+为您的战斗地图添加雨、雪等动态天气效果，营造沉浸式的桌游氛围。
 
-To add weather you can select any map (you may need to double click to select a locked map) and click the Add Weather button in the context menu.
+## 如何添加天气
 
-![Add weather context menu item](https://raw.githubusercontent.com/owlbear-rodeo/weather/main/docs/add.jpg)
+1. 选中任意地图（若地图被锁定，可双击以解除选择限制）。
+2. 在右键菜单中点击“添加天气”按钮，即可为当前地图启用天气特效。
 
-Once added you can adjust the weathers settings using the Weather Settings panel.
+![“添加天气”菜单项](https://raw.githubusercontent.com/ZJHSteven/weather/main/docs/add.jpg)
 
-![Weather settings context menu item](https://raw.githubusercontent.com/owlbear-rodeo/weather/main/docs/settings.jpg)
+启用后可通过“天气设置”面板进一步调节天气表现。
 
-A description of the settings are listed below:
+![“天气设置”菜单项](https://raw.githubusercontent.com/ZJHSteven/weather/main/docs/settings.jpg)
 
-| Menu Item | Description                                   |
-| --------- | --------------------------------------------- |
-| Condition | Choose between various weather types          |
-| Direction | The direction of the wind relative to the map |
-| Wind      | The speed of the wind                         |
-| Cover     | How heavy the weather is                      |
+下表列出了可调节的参数及其含义：
 
-To remove a weather effect you can click the Remove Weather button at the bottom of the Weather Settings
+| 菜单项   | 功能说明                     |
+| -------- | ---------------------------- |
+| Condition | 选择天气类型（雨、雪、沙尘等） |
+| Direction | 调整相对于地图的风向           |
+| Wind      | 设定风速大小                   |
+| Cover     | 控制天气覆盖范围与强度           |
 
-**Support**
+如需移除天气效果，可在“天气设置”面板底部点击“移除天气”。
 
-If you need support for this extension you can email <support@owlbear.rodeo>
+**支持与反馈**
+
+若需获取更多技术支持，请发送邮件至 <support@owlbear.rodeo>，或直接访问上游项目页面。
