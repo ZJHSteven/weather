@@ -6,8 +6,8 @@ icon: https://weather-56j.pages.dev/logo.png
 tags:
   - built-by-owlbear
   - content-pack
-manifest: https://bubbles-for-owlbear-rodeo.pages.dev/manifest.json
-learn-more: https://weather-56j.pages.dev/
+manifest: https://weather-56j.pages.dev/manifest.json
+learn-more: https://github.com/ZJHSteven/weather
 ---
 
 # 天气

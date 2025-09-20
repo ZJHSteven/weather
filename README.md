@@ -6,7 +6,7 @@
 
 推荐使用“从 URL 安装”方式添加本汉化扩展：
 
-- 复制清单链接：`https://bubbles-for-owlbear-rodeo.pages.dev/manifest.json`
+- 复制清单链接：`https://weather-56j.pages.dev/manifest.json`
 - 在 Owlbear Rodeo 中依次选择 `Extensions → Install from URL`，粘贴上述链接并确认。
 
 提示：如已从上游商店安装英文版，请先卸载后再按以上步骤安装本汉化版本，以避免混淆。
