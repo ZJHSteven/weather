@@ -21,7 +21,7 @@ async function init() {
 
 init();
 
-// Clean up on HMR refresh
+// 当 Vite 触发 HMR 时清理旧的响应器，避免重复注册
 if (import.meta.hot) {
   import.meta.hot.accept();
   import.meta.hot.dispose(() => {

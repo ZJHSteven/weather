@@ -9,7 +9,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 /**
- * Create a MUI theme based off of the current OBR theme
+ * 根据 OBR 当前主题生成对应的 MUI 主题，确保扩展界面风格与宿主一致。
  */
 function getTheme(theme?: Theme) {
   return createTheme({
@@ -64,7 +64,7 @@ function getTheme(theme?: Theme) {
 }
 
 /**
- * Provide a MUI theme with the same palette as the parent OBR window
+ * 将生成的主题注入到子树，使扩展在明暗模式切换时保持同步。
  */
 export function PluginThemeProvider({
   children,

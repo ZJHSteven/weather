@@ -38,6 +38,10 @@ const SmallLabel = styled(FormLabel)({
   marginBottom: 4,
 });
 
+/**
+ * 自定义带内边距的滚动容器，使下拉菜单在移动端也具备良好滚动体验。
+ * 采用 forwardRef 便于 MUI 在渲染时正确处理焦点与动画。
+ */
 const ScrollInsetPaper = forwardRef<HTMLDivElement, PaperProps>(
   ({ children, ...rest }, ref) => {
     return (
@@ -72,6 +76,10 @@ const ScrollInsetPaper = forwardRef<HTMLDivElement, PaperProps>(
   }
 );
 
+/**
+ * Menu 组件负责监听当前选中的场景物件，并在加载完成后渲染天气控制面板。
+ * 对初学者而言，这里展示了如何通过 OBR SDK 与 React 状态同步协作。
+ */
 export function Menu() {
   const [selection, setSelection] = useState<string[] | null>(null);
   useEffect(() => {
@@ -188,59 +196,66 @@ function directionToVector(dir: Direction): Vector2 {
   }
 }
 
+/**
+ * 将风向枚举转换为中文标签，并附带方向图标，便于玩家快速识别。
+ */
 function directionToLabel(dir: Direction): React.ReactNode {
   switch (dir) {
     case "EAST":
       return (
         <>
-          E <East fontSize="small" />
+          东 <East fontSize="small" />
         </>
       );
     case "NORTH":
       return (
         <>
-          N <North fontSize="small" />
+          北 <North fontSize="small" />
         </>
       );
     case "SOUTH":
       return (
         <>
-          S <South fontSize="small" />
+          南 <South fontSize="small" />
         </>
       );
     case "WEST":
       return (
         <>
-          W <West fontSize="small" />
+          西 <West fontSize="small" />
         </>
       );
     case "NORTH_EAST":
       return (
         <>
-          NE <NorthEast fontSize="small" />
+          东北 <NorthEast fontSize="small" />
         </>
       );
     case "NORTH_WEST":
       return (
         <>
-          NW <NorthWest fontSize="small" />
+          西北 <NorthWest fontSize="small" />
         </>
       );
     case "SOUTH_EAST":
       return (
         <>
-          SE <SouthEast fontSize="small" />
+          东南 <SouthEast fontSize="small" />
         </>
       );
     case "SOUTH_WEST":
       return (
         <>
-          SW <SouthWest fontSize="small" />
+          西南 <SouthWest fontSize="small" />
         </>
       );
   }
 }
 
+/**
+ * MenuControls 负责展示所有天气可调参数，并将修改同步回所选场景物件。
+ * 通过 useMemo 提取初始配置，避免重复读取元数据，保持性能稳定。
+ */
 function MenuControls({ items }: { items: Item[] }) {
   const config = useMemo<WeatherConfig>(() => {
     for (const item of items) {
@@ -310,7 +325,7 @@ function MenuControls({ items }: { items: Item[] }) {
     <Stack px={2} py={1}>
       <Stack gap={1} direction="row" sx={{ mb: 1 }} alignItems="center">
         <FormControl fullWidth>
-          <SmallLabel id="condition-label">Condition</SmallLabel>
+          <SmallLabel id="condition-label">天气类型</SmallLabel>
           <Select
             labelId="condition-label"
             value={values.type}
@@ -324,16 +339,16 @@ function MenuControls({ items }: { items: Item[] }) {
               },
             }}
           >
-            <MenuItem value="SNOW">Snow</MenuItem>
-            <MenuItem value="RAIN">Rain</MenuItem>
-            <MenuItem value="SAND">Sand</MenuItem>
-            <MenuItem value="FIRE">Fire</MenuItem>
-            <MenuItem value="CLOUD">Cloud</MenuItem>
-            <MenuItem value="BLOOM">Bloom</MenuItem>
+            <MenuItem value="SNOW">降雪</MenuItem>
+            <MenuItem value="RAIN">降雨</MenuItem>
+            <MenuItem value="SAND">沙尘</MenuItem>
+            <MenuItem value="FIRE">火焰</MenuItem>
+            <MenuItem value="CLOUD">云雾</MenuItem>
+            <MenuItem value="BLOOM">辉光</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth>
-          <SmallLabel id="direction-label">Direction</SmallLabel>
+          <SmallLabel id="direction-label">风向</SmallLabel>
           <Select
             labelId="direction-label"
             value={directionValue}
@@ -356,54 +371,54 @@ function MenuControls({ items }: { items: Item[] }) {
             }}
           >
             <MenuItem value="NORTH">
-              North <North sx={{ ml: 0.5 }} fontSize="small" />
+              北 <North sx={{ ml: 0.5 }} fontSize="small" />
             </MenuItem>
             <MenuItem value="NORTH_EAST">
-              North East <NorthEast sx={{ ml: 0.5 }} fontSize="small" />
+              东北 <NorthEast sx={{ ml: 0.5 }} fontSize="small" />
             </MenuItem>
             <MenuItem value="EAST">
-              East <East sx={{ ml: 0.5 }} fontSize="small" />
+              东 <East sx={{ ml: 0.5 }} fontSize="small" />
             </MenuItem>
             <MenuItem value="SOUTH_EAST">
-              South East <SouthEast sx={{ ml: 0.5 }} fontSize="small" />
+              东南 <SouthEast sx={{ ml: 0.5 }} fontSize="small" />
             </MenuItem>
             <MenuItem value="SOUTH">
-              South <South sx={{ ml: 0.5 }} fontSize="small" />
+              南 <South sx={{ ml: 0.5 }} fontSize="small" />
             </MenuItem>
             <MenuItem value="SOUTH_WEST">
-              South West
+              西南
               <SouthWest sx={{ ml: 0.5 }} fontSize="small" />
             </MenuItem>
             <MenuItem value="WEST">
-              West <West sx={{ ml: 0.5 }} fontSize="small" />
+              西 <West sx={{ ml: 0.5 }} fontSize="small" />
             </MenuItem>
             <MenuItem value="NORTH_WEST">
-              North West <NorthWest sx={{ ml: 0.5 }} fontSize="small" />
+              西北 <NorthWest sx={{ ml: 0.5 }} fontSize="small" />
             </MenuItem>
           </Select>
         </FormControl>
       </Stack>
       <Stack gap={1} direction="row" sx={{ mb: 1 }} alignItems="center">
         <FormControl fullWidth>
-          <SmallLabel>Wind</SmallLabel>
+          <SmallLabel>风速</SmallLabel>
           <ToggleButtonGroup
             exclusive
-            aria-label="edge"
+            aria-label="风速选择"
             size="small"
             value={values.speed}
             onChange={(_, v) => v && handleWindChange(v)}
             fullWidth
           >
-            <ToggleButton value={1} aria-label="low">
+            <ToggleButton value={1} aria-label="低风速">
               <WindLow />
             </ToggleButton>
-            <ToggleButton value={2} aria-label="medium">
+            <ToggleButton value={2} aria-label="中等风速">
               <WindMedium />
             </ToggleButton>
-            <ToggleButton value={3} aria-label="high">
+            <ToggleButton value={3} aria-label="高风速">
               <WindHigh />
             </ToggleButton>
-            <ToggleButton value={4} aria-label="max">
+            <ToggleButton value={4} aria-label="极强风速">
               <WindMax />
             </ToggleButton>
           </ToggleButtonGroup>
@@ -411,25 +426,25 @@ function MenuControls({ items }: { items: Item[] }) {
       </Stack>
       <Stack gap={1} direction="row" sx={{ mb: 2 }} alignItems="center">
         <FormControl fullWidth>
-          <SmallLabel>Cover</SmallLabel>
+          <SmallLabel>覆盖强度</SmallLabel>
           <ToggleButtonGroup
             exclusive
-            aria-label="type"
+            aria-label="覆盖强度选择"
             size="small"
             value={values.density}
             onChange={(_, v) => v && handleCoverChange(v)}
             fullWidth
           >
-            <ToggleButton value={1} aria-label="low">
+            <ToggleButton value={1} aria-label="低覆盖">
               <DensityLow />
             </ToggleButton>
-            <ToggleButton value={2} aria-label="medium">
+            <ToggleButton value={2} aria-label="中等覆盖">
               <DensityMedium />
             </ToggleButton>
-            <ToggleButton value={3} aria-label="high">
+            <ToggleButton value={3} aria-label="高覆盖">
               <DensityHigh />
             </ToggleButton>
-            <ToggleButton value={4} aria-label="max">
+            <ToggleButton value={4} aria-label="极高覆盖">
               <DensityMax />
             </ToggleButton>
           </ToggleButtonGroup>
@@ -451,7 +466,7 @@ function MenuControls({ items }: { items: Item[] }) {
         }}
         color="error"
       >
-        Remove Weather
+        移除天气
       </Button>
     </Stack>
   );

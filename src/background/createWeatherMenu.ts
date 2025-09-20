@@ -3,13 +3,18 @@ import { getPluginId } from "../util/getPluginId";
 
 import weatherIcon from "../assets/weather.svg";
 
+/**
+ * 创建插件的上下文菜单入口。
+ * 这里注册两个图标按钮：其一用于在地图上快速添加默认天气，其二嵌入设置面板。
+ * 标签统一改为中文，确保与前端界面语言保持一致，便于中文用户理解操作。
+ */
 export function createWeatherMenu() {
   OBR.contextMenu.create({
     id: getPluginId("weather-menu/add"),
     icons: [
       {
         icon: weatherIcon,
-        label: "Add Weather",
+        label: "添加天气",
         filter: {
           every: [
             { key: "layer", value: "MAP", coordinator: "||" },
@@ -39,7 +44,7 @@ export function createWeatherMenu() {
     icons: [
       {
         icon: weatherIcon,
-        label: "Weather Settings",
+        label: "天气设置",
         filter: {
           every: [
             { key: "layer", value: "MAP", coordinator: "||" },
