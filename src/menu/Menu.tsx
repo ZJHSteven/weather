@@ -344,7 +344,7 @@ function MenuControls({ items }: { items: Item[] }) {
             <MenuItem value="SAND">沙尘</MenuItem>
             <MenuItem value="FIRE">火焰</MenuItem>
             <MenuItem value="CLOUD">云雾</MenuItem>
-            <MenuItem value="BLOOM">辉光</MenuItem>
+            <MenuItem value="BLOOM">花瓣</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth>
